@@ -5,7 +5,7 @@ import os.path
 versionString = '0.0.1'
 
 if __name__ == '__main__':
-    setup(name='lucem_ilud',
+    setup(name='lucem_illud',
         version = versionString,
         author="James Evans, Reid McIlroy-Young",
         author_email = "reidmcy@uchicago.edu",
