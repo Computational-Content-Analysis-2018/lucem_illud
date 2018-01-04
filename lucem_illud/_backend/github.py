@@ -8,12 +8,57 @@ import shutil
 import pandas
 import requests
 import time
+import getpass
+import os.path
 import numpy as np
 
 apiURL = 'https://api.github.com'
 tokenFile = '../token.txt'
 orgName = 'Computational-Content-Analysis-2018'
+repoName = 'content-analysis-2018'
 
+def makeStudentRepo(targetDir = '.', name = repoName):
+    repoDir = os.path.abspath(os.path.join(os.path.expanduser(targetDir), name))
+    print("Creating your repo at: {}".format(repoDir))
+    if os.path.isdir(repoDir):
+        print("Repo already exists at: {}".format(repoDir))
+        print("Exiting")
+        return
+    print("A repo will be created on your GitHub account, to do this you will need to input your GitHub username and password")
+    while True:
+        username = input("Username: ")
+        password = getpass.getpass()
+        auth = (username, password)
+        try:
+            getGithubURL('', auth = auth)
+        except RuntimeError:
+            print("Your username or password was incorrect, please try again")
+        else:
+            break
+
+    data = {
+        "name": name,
+        "description": 'Assignments for Computational Content Analysis 2018',
+        "homepage": "https://github.com/Computational-Content-Analysis-2018",
+        "private": False,
+        "has_issues": True,
+        "has_projects": False,
+        "has_wiki": False,
+        "auto_init" : False,
+    }
+    print("Creating a new repo")
+    try:
+        d = makeNewRepo(data, auth=auth)
+        print("Repo created at: {}".format(d['html_url']))
+    except RuntimeError:
+        print("Repo already exists, cloning")
+        d = getGithubURL('/repos/{}/{}'.format(username, name), auth = auth)
+    print("Adding the notebooks")
+    repo = git.Repo.clone_from(d['clone_url'], repoDir)
+    base = repo.create_remote('base', url='https://github.com/Computational-Content-Analysis-2018/Content-Analysis.git')
+    base.pull('master')
+    repo.remotes.origin.push('master')
+    print("Done")
 
 def getGithubURL(target, auth = None):
     if auth is None:
