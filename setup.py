@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import re
 import os.path
 
-versionString = '0.0.1'
+versionString = '0.0.2'
 
 if __name__ == '__main__':
     setup(name='lucem_illud',
@@ -15,6 +15,11 @@ if __name__ == '__main__':
         packages = find_packages(),
         install_requires = [
                 'numpy',
+                'requests',
+                'pandas',
+                'python-docx',
+                'pillow',
+                'pdfminer2'
         ],
         classifiers = [
         'Development Status :: 1 - Planning',
