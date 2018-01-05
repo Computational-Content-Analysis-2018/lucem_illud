@@ -57,7 +57,14 @@ def makeStudentRepo(targetDir = '.', name = repoName):
     repo = git.Repo.clone_from(d['clone_url'], repoDir)
     base = repo.create_remote('base', url='https://github.com/Computational-Content-Analysis-2018/Content-Analysis.git')
     base.pull('master')
-    repo.remotes.origin.push('master')
+    print("Pushing to GitHub, you may have to enter your login details again")
+    while True:
+        try:
+            repo.remotes.origin.push('master')
+        except:
+            print("Your username or password was incorrect, please try again. Make sure you are using your GitHub username and password")
+        else:
+            break
     print("Done")
 
 def getGithubURL(target, auth = None):
