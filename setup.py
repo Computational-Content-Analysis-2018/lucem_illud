@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import re
 import os.path
 
-versionString = '0.0.6'
+versionString = '1.0.0'
 
 if __name__ == '__main__':
     setup(name='lucem_illud',

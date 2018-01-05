@@ -51,10 +51,14 @@ def makeStudentRepo(targetDir = '.', name = repoName):
         d = makeNewRepo(data, auth=auth)
         print("Repo created at: {}".format(d['html_url']))
     except RuntimeError:
-        print("Repo already exists, cloning")
+        print("Repo already exists")
         d = getGithubURL('/repos/{}/{}'.format(username, name), auth = auth)
+    if not os.path.isdir(repoDir):
+        print("cloning repo")
+        repo = git.Repo.clone_from(d['clone_url'], repoDir)
+    else:
+        repo = git.repo.Repo(repoDir)
     print("Adding the notebooks")
-    repo = git.Repo.clone_from(d['clone_url'], repoDir)
     base = repo.create_remote('base', url='https://github.com/Computational-Content-Analysis-2018/Content-Analysis.git')
     base.pull('master')
     print("Pushing to GitHub, you may have to enter your login details again")
