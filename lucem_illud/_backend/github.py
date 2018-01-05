@@ -26,13 +26,13 @@ def makeStudentRepo(targetDir = '.', name = repoName):
         return
     print("A repo will be created on your GitHub account, to do this you will need to input your GitHub username and password")
     while True:
-        username = input("Username: ")
+        username = input("GitHub Username: ")
         password = getpass.getpass()
         auth = (username, password)
         try:
             getGithubURL('', auth = auth)
         except RuntimeError:
-            print("Your username or password was incorrect, please try again")
+            print("Your username or password was incorrect, please try again. Make sure you are using your GitHub username and password")
         else:
             break
 
