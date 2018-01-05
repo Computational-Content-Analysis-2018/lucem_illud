@@ -12,7 +12,7 @@ def _checkCurrentVersion():
     localVersion = pkg_resources.get_distribution('lucem_illud').version
     if serverVersion != serverVersion:
         print('lucem_illud is out of date, please update')
-        print('pip install git+git://github.com/Computational-Content-Analysis-2018/lucem_illud.git')
+        print('pip install -U git+git://github.com/Computational-Content-Analysis-2018/lucem_illud.git')
 
 try:
     checkCurrentVersion()
