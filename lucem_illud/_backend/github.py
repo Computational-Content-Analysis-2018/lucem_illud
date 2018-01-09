@@ -121,7 +121,6 @@ def makeNewRepo(data, auth, org = None):
         target = 'orgs/{}/repos'.format(org)
     return postGithubURL(target, data, auth = auth)
 
-
 def makeCommentsRepo(classTime, articleCite, articleURL, auth, org = orgName):
     articleName = re.search(r'“(.+?)\.?”', articleCite).group(1)
     repoName = "{}-{}".format(classTime, articleName)[:100]
