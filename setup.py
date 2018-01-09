@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import re
 import os.path
 
-versionString = '1.0.0'
+versionString = '1.0.1'
 
 if __name__ == '__main__':
     setup(name='lucem_illud',
@@ -11,7 +11,6 @@ if __name__ == '__main__':
         author_email = "reidmcy@uchicago.edu",
         license = 'GPL',
         url="https://github.com/Computational-Content-Analysis-2018/lucem-illud",
-        #download_url = "https://github.com/networks-lab/metaknowledge/archive/{}.tar.gz".format(versionString),
         packages = find_packages(),
         install_requires = [
                 'numpy',
@@ -21,6 +20,11 @@ if __name__ == '__main__':
                 'pillow',
                 'pdfminer2',
                 'GitPython',
+                'wordcloud',
+                'scipy',
+                'seaborn',
+                'sklearn',
+                'nltk',
         ],
         classifiers = [
         'Development Status :: 1 - Planning',
