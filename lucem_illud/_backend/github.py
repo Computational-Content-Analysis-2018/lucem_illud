@@ -17,6 +17,32 @@ tokenFile = '../token.txt'
 orgName = 'Computational-Content-Analysis-2018'
 repoName = 'content-analysis-2018'
 
+def getAllStudents(df, outputDir, auth = None, name = repoName):
+    os.makedirs(outputDir, exist_ok = True)
+    for i, row in df.iterrows():
+        try:
+            print("Getting: {}".format(row['name']))
+            getStudentRepo(row['ghName'], os.path.join(outputDir, row['name']), auth = auth, name = name)
+        except RuntimeError as e:
+            print(e)
+    print("Done")
+
+def getStudentRepo(ghName, outputName, auth = None, name = repoName):
+    repoURL = "/repos/{}/{}".format(ghName, name)
+    try:
+        repoDat = getGithubURL(repoURL, auth = auth)
+    except RuntimeError:
+        repoURL = "/repos/{}/Content-Analysis".format(ghName, name)
+        repoDat = getGithubURL(repoURL, auth = auth)
+    #repo = git.Repo.clone_from(repoDat['clone_url'], outputName)
+    #return repo
+
+def checkRate(auth = None):
+    rateLimiting = getGithubURL('rate_limit'.format(apiURL), auth = auth)
+    print("remaining : {}".format(rateLimiting['rate']['remaining']))
+    print("reset : {}".format(datetime.datetime.fromtimestamp(rateLimiting['rate']['reset']).strftime('%H:%M')))
+    return rateLimiting['rate']['remaining']
+
 def makeStudentRepo(targetDir = '.', name = repoName):
     repoDir = os.path.abspath(os.path.join(os.path.expanduser(targetDir), name))
     print("Creating your repo at: {}".format(repoDir))
