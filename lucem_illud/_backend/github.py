@@ -34,8 +34,8 @@ def getStudentRepo(ghName, outputName, auth = None, name = repoName):
     except RuntimeError:
         repoURL = "/repos/{}/Content-Analysis".format(ghName, name)
         repoDat = getGithubURL(repoURL, auth = auth)
-    #repo = git.Repo.clone_from(repoDat['clone_url'], outputName)
-    #return repo
+    repo = git.Repo.clone_from(repoDat['clone_url'], outputName)
+    return repo
 
 def checkRate(auth = None):
     rateLimiting = getGithubURL('rate_limit'.format(apiURL), auth = auth)
