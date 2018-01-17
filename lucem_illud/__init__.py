@@ -1,9 +1,3 @@
-from .data_dirs  import *
-from .downloaders import *
-from .loaders import *
-from .visualizers import *
-from .proccessing import *
-
 import nltk
 
 #setting the path for nltk
@@ -18,6 +12,12 @@ except LookupError:
     print("Downloading to ../data this should only take a couple minutes")
     nltk.download('all', download_dir = '../data')
     nltk.data.path.append('../data')
+
+from .data_dirs  import *
+from .downloaders import *
+from .loaders import *
+from .visualizers import *
+from .proccessing import *
 
 import requests
 import re
