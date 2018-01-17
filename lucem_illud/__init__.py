@@ -1,7 +1,23 @@
 from .data_dirs  import *
 from .downloaders import *
 from .loaders import *
+from .visualizers import *
+from .proccessing import *
 
+import nltk
+
+#setting the path for nltk
+try:
+    #adding path for both local and server, only one of these will actually be used at a time
+    nltk.data.path.append('/project2/macs60000/shared_data/nltk')
+    nltk.data.path.append('../data')
+    #Check that everything is in place
+    nltk.corpus.gutenberg.fileids()
+except LookupError:
+    print("You have to download all the nltk documents")
+    print("Downloading to ../data this should only take a couple minutes")
+    nltk.download('all', download_dir = '../data')
+    nltk.data.path.append('../data')
 
 import requests
 import re
