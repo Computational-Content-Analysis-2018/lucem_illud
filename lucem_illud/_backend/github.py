@@ -31,9 +31,17 @@ def getStudentRepo(ghName, outputName, auth = None, name = repoName):
     repoURL = "/repos/{}/{}".format(ghName, name)
     try:
         repoDat = getGithubURL(repoURL, auth = auth)
-    except RuntimeError:
-        repoURL = "/repos/{}/Content-Analysis".format(ghName, name)
-        repoDat = getGithubURL(repoURL, auth = auth)
+    except RuntimeError as e1:
+        try:
+            repoURL = "/repos/{}/Content-Analysis".format(ghName, name)
+            repoDat = getGithubURL(repoURL, auth = auth)
+        except RuntimeError as e2:
+            try:
+                repoURL = "/repos/{}/Computational-Content-Analysis-2018".format(ghName, name)
+                repoDat = getGithubURL(repoURL, auth = auth)
+            except RuntimeError as e3:
+                raise e1
+
     repo = git.Repo.clone_from(repoDat['clone_url'], outputName)
     return repo
 

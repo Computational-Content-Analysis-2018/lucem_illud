@@ -128,3 +128,31 @@ def getTextFromWikiPage(targetURL, sourceParNum, sourceText):
         parsDict['source-paragraph-number'].append(sourceParNum)
         parsDict['source-paragraph-text'].append(sourceText)
     return pandas.DataFrame(parsDict)
+
+def getGithubFiles(target, maxFiles = 100):
+    #We are setting a max so our examples don't take too long to run
+    #For converting to a DataFrame
+    releasesDict = {
+        'name' : [], #The name of the file
+        'text' : [], #The text of the file, watch out for binary files
+        'path' : [], #The path in the git repo to the file
+        'html_url' : [], #The url to see the file on Github
+        'download_url' : [], #The url to download the file
+    }
+
+    #Get the directory information from Github
+    r = requests.get(target)
+    filesLst = json.loads(r.text)
+
+    for fileDict in filesLst[:maxFiles]:
+        #These are provided by the directory
+        releasesDict['name'].append(fileDict['name'])
+        releasesDict['path'].append(fileDict['path'])
+        releasesDict['html_url'].append(fileDict['html_url'])
+        releasesDict['download_url'].append(fileDict['download_url'])
+
+        #We need to download the text though
+        text = requests.get(fileDict['download_url']).text
+        releasesDict['text'].append(text)
+
+    return pandas.DataFrame(releasesDict)

@@ -2,8 +2,9 @@ import nltk
 
 stop_words_basic = nltk.corpus.stopwords.words('english')
 stemmer_basic = nltk.stem.snowball.SnowballStemmer('english')
+lemmer_basic = nltk.stem.WordNetLemmatizer()
 
-def normalizeTokens(tokenLst, stopwordLst = stop_words_basic, stemmer = stemmer_basic, lemmer = None):
+def normalizeTokens(tokenLst, stopwordLst = None, stemmer = None, lemmer = None):
     #We can use a generator here as we just need to iterate over it
 
     #Lowering the case and removing non-words
