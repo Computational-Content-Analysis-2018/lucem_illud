@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import re
 import os.path
 
-versionString = '3.0.1'
+versionString = '5.0.0'
 
 if __name__ == '__main__':
     setup(name='lucem_illud',
@@ -26,7 +26,8 @@ if __name__ == '__main__':
                 'sklearn',
                 'nltk',
                 'gensim',
-                'matplotlib'
+                'matplotlib',
+                'pyanno3',
         ],
         classifiers = [
         'Development Status :: 1 - Planning',
