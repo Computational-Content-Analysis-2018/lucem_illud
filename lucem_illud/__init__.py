@@ -13,11 +13,19 @@ except LookupError:
     nltk.download('all', download_dir = '../data')
     nltk.data.path.append('../data')
 
+#gensim uses a couple of deprecated features
+#we can't do anything about them so lets ignore them
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
+
 from .data_dirs  import *
 from .downloaders import *
 from .loaders import *
 from .visualizers import *
 from .proccessing import *
+from .cartoons import *
+from .metrics import *
 
 import requests
 import re
