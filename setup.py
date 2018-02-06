@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import re
 import os.path
 
-versionString = '5.0.0'
+versionString = '5.0.1'
 
 if __name__ == '__main__':
     setup(name='lucem_illud',
@@ -25,7 +25,7 @@ if __name__ == '__main__':
                 'seaborn',
                 'sklearn',
                 'nltk',
-                'gensim',
+                'gensim==3.2.0',
                 'matplotlib',
                 'pyanno3',
         ],
