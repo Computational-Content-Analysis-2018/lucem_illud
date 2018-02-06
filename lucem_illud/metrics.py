@@ -41,11 +41,11 @@ def evaluateClassifier(clf, testDF):
         preds = [True if (c == cat) else False for c in predictions]
         acts = [True if (c == cat) else False for c in testDF['category']]
         classes.append(cat)
-        results['AUC'].append(sklearn.metrics.roc_auc_score(preds, acts))
-        results['Average_Precision'].append(sklearn.metrics.average_precision_score(preds, acts))
-        results['Precision'].append(sklearn.metrics.precision_score(preds, acts))
-        results['Recall'].append(sklearn.metrics.recall_score(preds, acts))
-        results['Error_Rate'].append(1 -  sklearn.metrics.accuracy_score(preds, acts))
+        results['AUC'].append(sklearn.metrics.roc_auc_score(acts, preds))
+        results['Average_Precision'].append(sklearn.metrics.average_precision_score(acts, preds))
+        results['Precision'].append(sklearn.metrics.precision_score(acts, preds))
+        results['Recall'].append(sklearn.metrics.recall_score(acts, preds))
+        results['Error_Rate'].append(1 -  sklearn.metrics.accuracy_score(acts, preds))
     df = pandas.DataFrame(results, index=classes)
     df.index.rename('Category', inplace=True)
     return df
@@ -156,7 +156,7 @@ def compareModels(dfTrain, testDF, models):
         for cat in classes:
             preds = [True if (c == cat) else False for c in predictions]
             acts = [True if (c == cat) else False for c in testDF['category']]
-            results["AUC-{}".format(cat)].append(sklearn.metrics.roc_auc_score(preds, acts))
+            results["AUC-{}".format(cat)].append(sklearn.metrics.roc_auc_score(acts, preds))
     df = pandas.DataFrame(results, index=modNames)
     df.index.rename('Model', inplace=True)
     return df

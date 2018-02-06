@@ -1,5 +1,8 @@
-import torch
-import torch.nn
+try:
+    import torch
+    import torch.nn
+except ImportError:
+    pass
 import numpy as np
 import nltk
 import gensim
@@ -65,6 +68,8 @@ class BiRNN(torch.nn.Module):
                             bidirectional = True)
 
         self.fc = torch.nn.Linear(hidden_size * 2, self.n_categories)
+        if torch.cuda.is_available():
+            self.cuda()
 
     def forward(self, x):
         out, _ = self.lstm(x)
@@ -82,7 +87,7 @@ class BiRNN(torch.nn.Module):
         a))
         if torch.cuda.is_available():
             yVec = yVec.cuda()
-        return yVec
+        return yVec.float().unsqueeze(0)
 
     def save(self, saveName):
         with open(saveName, 'wb') as f:
