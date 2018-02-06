@@ -26,6 +26,7 @@ from .visualizers import *
 from .proccessing import *
 from .cartoons import *
 from .metrics import *
+from .neurel_net import *
 
 import requests
 import re

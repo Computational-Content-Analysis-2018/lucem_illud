@@ -82,12 +82,12 @@ def generateVecs(df, sents = False):
 
 def loadNewsGroups(categories = ['comp.sys.mac.hardware', 'comp.windows.x', 'misc.forsale', 'rec.autos']):
     newsgroupsCategories = categories
-    newsgroups = sklearn.datasets.fetch_20newsgroups(subset='train', data_home = '../data/scikit_learn_data')
+    newsgroups = sklearn.datasets.fetch_20newsgroups(subset='train', data_home = dataDirectory)
     newsgroupsDF = pandas.DataFrame(columns = ['text', 'category', 'source_file'])
 
     for category in newsgroupsCategories:
         print("Loading data for: {}".format(category))
-        ng = sklearn.datasets.fetch_20newsgroups(subset='train', categories = [category], remove=['headers', 'footers', 'quotes'], data_home = 'data')
+        ng = sklearn.datasets.fetch_20newsgroups(subset='train', categories = [category], remove=['headers', 'footers', 'quotes'], data_home = dataDirectory)
         newsgroupsDF = newsgroupsDF.append(pandas.DataFrame({'text' : ng.data, 'category' : [category] * len(ng.data), 'source_file' : ng.filenames}), ignore_index=True)
 
     print("Converting to vectors")
