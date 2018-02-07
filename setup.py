@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import re
 import os.path
 
-versionString = '5.1.3'
+versionString = '5.2.3'
 
 if __name__ == '__main__':
     setup(name='lucem_illud',
@@ -23,7 +23,7 @@ if __name__ == '__main__':
                 'wordcloud',
                 'scipy',
                 'seaborn',
-                'sklearn',
+                'scikit-learn==0.19.1',
                 'nltk',
                 'gensim==3.2.0',
                 'matplotlib',

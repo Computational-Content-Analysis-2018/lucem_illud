@@ -79,3 +79,15 @@ def targetSplit(noise = 0, numPerCategory = 500, innerRad = .3):
     }
 
     return pandas.DataFrame(datDict)
+
+def multiBlobs(noise = 0, numPerCategory = 500, centers = 5):
+    if isinstance(centers, int):
+        n_samples = numPerCategory * centers
+    else:
+        n_samples = numPerCategory * len(centers)
+    X, y = sklearn.datasets.make_blobs(n_samples=n_samples, centers=centers, cluster_std = (.8 * (noise * 2 + 1)))
+    datDict = {
+        'vect' : list(X),
+        'category' : y,
+    }
+    return pandas.DataFrame(datDict)

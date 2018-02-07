@@ -5,19 +5,7 @@ import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 import sklearn
-import sklearn.feature_extraction.text
 import sklearn.decomposition
-from sklearn import preprocessing, linear_model
-from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
-from sklearn.datasets import fetch_20newsgroups, make_blobs
-from sklearn.feature_extraction.text import TfidfVectorizer  #Feature extraction
-from sklearn.naive_bayes import MultinomialNB #Our learner.
-from sklearn.pipeline import make_pipeline
-from sklearn.cross_validation import train_test_split
-from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
-from sklearn.ensemble import BaggingClassifier, RandomForestRegressor
-from sklearn.neural_network import MLPClassifier
-from sklearn import neighbors
 
 import numpy as np #arrays
 import matplotlib.pyplot as plt #Plots
@@ -92,7 +80,7 @@ def plotMultiROC(clf, testDF):
 
 def plotConfusionMatrix(clf, testDF):
     predictions = clf.predict(np.stack(testDF['vect'], axis=0))
-    mat = confusion_matrix(predictions, testDF['category'])
+    mat = sklearn.metrics.confusion_matrix(predictions, testDF['category'])
     seaborn.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False,
                     xticklabels=testDF['category'].unique(), yticklabels=testDF['category'].unique())
     plt.xlabel('true label')
@@ -101,7 +89,7 @@ def plotConfusionMatrix(clf, testDF):
     plt.show()
     plt.close()
 
-def plotregions(df, clf, h = .01):
+def plotregions(clf, df, h = .01):
     if np.random.choice(df['vect']).shape[0] > 2:
         pca = sklearn.decomposition.PCA(n_components = 2)
         reduced_data = pca.fit_transform(np.stack(df['vect'], axis=0))
