@@ -26,8 +26,10 @@ from .visualizers import *
 from .proccessing import *
 from .cartoons import *
 from .metrics import *
-from .neurel_net import *
-
+try:
+    from .neurel_net import *
+except ImportError:
+    pass
 import requests
 import re
 import pkg_resources
