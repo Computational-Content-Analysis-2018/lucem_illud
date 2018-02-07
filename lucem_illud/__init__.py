@@ -28,7 +28,7 @@ from .cartoons import *
 from .metrics import *
 try:
     from .neurel_net import *
-except ImportError:
+except NameError:
     pass
 import requests
 import re
