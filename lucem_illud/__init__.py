@@ -26,6 +26,7 @@ from .visualizers import *
 from .proccessing import *
 from .cartoons import *
 from .metrics import *
+from .info_extract import *
 try:
     from .neurel_net import *
 except NameError:
