@@ -73,5 +73,7 @@ def openIE(target, memoryGigsUsage = 2):
 
 def startCoreServer(port = 9000, memoryGigsUsage = 2):
     print("Starting server on http://localhost:{}".format(port))
-    sp = subprocess.run(['java', '-mx{}g'.format(memoryGigsUsage), '-cp', '"*"', 'edu.stanford.nlp.pipeline.StanfordCoreNLPServer','-port', "{}".format(port), '-timeout', '15000', '-threads', '1'], stdout = subprocess.PIPE, stderr = subprocess.PIPE,  cwd = os.path.join(stanfordDir, 'core'))
-    print(sp.stderr.decode('utf-8'))
+    try:
+        sp = subprocess.run(['java', '-mx{}g'.format(memoryGigsUsage), '-cp', os.path.join(stanfordDir, 'core', '*'), 'edu.stanford.nlp.pipeline.StanfordCoreNLPServer','-port', "{}".format(port), '-timeout', '15000', '-threads', '1'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    except KeyboardInterrupt:
+        print("Exiting")
