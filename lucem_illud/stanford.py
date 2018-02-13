@@ -5,6 +5,7 @@ import os.path
 import tempfile
 import subprocess
 import io
+import time
 import pandas
 
 import nltk
@@ -72,8 +73,36 @@ def openIE(target, memoryGigsUsage = 2):
     return df
 
 def startCoreServer(port = 9000, memoryGigsUsage = 2):
-    print("Starting server on http://localhost:{}".format(port))
+    print("Starting server on http://localhost:{} , please wait a few seconds".format(port))
+
+    p = subprocess.Popen(['java', '-mx{}g'.format(memoryGigsUsage), '-cp', os.path.join(stanfordDir, 'core', '*'), 'edu.stanford.nlp.pipeline.StanfordCoreNLPServer','-port', "{}".format(port), '-timeout', '15000', '-threads', '1'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    time.sleep(3)
     try:
-        sp = subprocess.run(['java', '-mx{}g'.format(memoryGigsUsage), '-cp', os.path.join(stanfordDir, 'core', '*'), 'edu.stanford.nlp.pipeline.StanfordCoreNLPServer','-port', "{}".format(port), '-timeout', '15000', '-threads', '1'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+        done = False
+        i = 0
+        direction = 2
+        while True:
+            s = "click Kernel -> Then Interupt to stop "
+            s += " " * i
+            if direction > 0:
+                s += "(((っ･д･)っ"
+            elif direction < 0:
+                s += "(･ω･｀)))"
+            else:
+                s += "  (* ﾟДﾟ)"
+            s = s.ljust(70)
+            print(s, end = '\r')
+            if direction == 0:
+                time.sleep(1)
+            else:
+                time.sleep(.3)
+            i += direction
+            if i > 10:
+                direction -= 1
+            elif i < 1:
+                direction =+ 1
     except KeyboardInterrupt:
-        print("Exiting")
+        print()
+        print("Exiting (ノ≧▽≦)ノ")
+    finally:
+        p.terminate()

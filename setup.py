@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import re
 import os.path
 
-versionString = '5.3.3'
+versionString = '5.3.4'
 
 if __name__ == '__main__':
     setup(name='lucem_illud',
@@ -28,6 +28,7 @@ if __name__ == '__main__':
                 'gensim==3.2.0',
                 'matplotlib',
                 'pyanno3',
+                'beautifulsoup4',
         ],
         classifiers = [
         'Development Status :: 1 - Planning',
