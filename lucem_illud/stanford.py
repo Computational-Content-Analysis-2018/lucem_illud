@@ -2,6 +2,10 @@ from .info_extract import stanfordDir, parserModelsPath, modelPath
 
 import os
 import os.path
+import tempfile
+import subprocess
+import io
+import pandas
 
 import nltk
 from nltk.tag import StanfordNERTagger
@@ -37,15 +41,20 @@ parser = stanford.StanfordParser(parserJarPath, parserModelsPath, modelPath)
 depParser = stanford.StanfordDependencyParser(parserJarPath, parserModelsPath)
 
 # Core
-def openIE(target):
+def openIE(target, memoryGigsUsage = 2):
     if isinstance(target, list):
         target = '\n'.join(target)
     #setup the java targets
-    coreDir = os.path.join()
 
-    jarPath = os.path.join(stanfordDir, core, 'stanford-corenlp-3.8.0.jar')
+    jarsDir = os.path.join(stanfordDir, 'core')
 
-    cp = '{}:CoreNLP-to-HTML.xsl:slf4j-api.jar:slf4j-simple.jar'.format(jarPath)
+    cp = [
+        os.path.join(jarsDir, 'stanford-corenlp-3.8.0.jar'),
+        os.path.join(jarsDir, 'stanford-corenlp-3.8.0-models.jar'),
+        os.path.join(jarsDir, 'CoreNLP-to-HTML.xsl'),
+        os.path.join(jarsDir, 'slf4j-api.jar'),
+        os.path.join(jarsDir, 'slf4j-simple.jar'),
+    ]
     with tempfile.NamedTemporaryFile(mode = 'w', delete = False) as f:
         #Core nlp requires a files, so we will make a temp one to pass to it
         #This file should be deleted by the OS soon after it has been used
@@ -53,7 +62,7 @@ def openIE(target):
         f.seek(0)
         print("Starting OpenIE run")
         #If you know what these options do then you should mess with them on your own machine and not the shared server
-        sp = subprocess.run(['java', '-mx2g', '-cp', cp, 'edu.stanford.nlp.naturalli.OpenIE', '-threads', '1', f.name], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+        sp = subprocess.run(['java', '-mx{}g'.format(memoryGigsUsage), '-cp', ':'.join(cp), 'edu.stanford.nlp.naturalli.OpenIE', '-threads', '1', f.name], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
         #Live stderr is non-trivial so this is the best we can do
         print(sp.stderr.decode('utf-8'))
         retSting = sp.stdout.decode('utf-8')
@@ -61,3 +70,8 @@ def openIE(target):
     with io.StringIO(retSting) as f:
         df = pandas.read_csv(f, delimiter = '\t', names =['certainty', 'subject', 'verb', 'object'])
     return df
+
+def startCoreServer(port = 9000, memoryGigsUsage = 2):
+    print("Starting server on http://localhost:{}".format(port))
+    sp = subprocess.run(['java', '-mx{}g'.format(memoryGigsUsage), '-cp', '"*"', 'edu.stanford.nlp.pipeline.StanfordCoreNLPServer','-port', "{}".format(port), '-timeout', '15000', '-threads', '1'], stdout = subprocess.PIPE, stderr = subprocess.PIPE,  cwd = os.path.join(stanfordDir, 'core'))
+    print(sp.stderr.decode('utf-8'))
