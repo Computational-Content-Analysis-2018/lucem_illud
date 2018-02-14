@@ -79,7 +79,7 @@ def openIE(target, memoryGigsUsage = 2):
 def startCoreServer(port = 16433, memoryGigsUsage = 2):
 
     if 'HOST_IP' in os.environ:
-        ip = [os.environ['HOST_IP']
+        ip = [os.environ['HOST_IP']]
     else:
         ip = 'localhost'
 
