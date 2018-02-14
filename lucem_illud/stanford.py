@@ -1,3 +1,7 @@
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
+
 from .info_extract import stanfordDir, parserModelsPath, modelPath
 
 import os
@@ -72,8 +76,14 @@ def openIE(target, memoryGigsUsage = 2):
         df = pandas.read_csv(f, delimiter = '\t', names =['certainty', 'subject', 'verb', 'object'])
     return df
 
-def startCoreServer(port = 9000, memoryGigsUsage = 2):
-    print("Starting server on http://localhost:{} , please wait a few seconds".format(port))
+def startCoreServer(port = 16433, memoryGigsUsage = 2):
+
+    if 'HOST_IP' in os.environ:
+        ip = [os.environ['HOST_IP']
+    else:
+        ip = 'localhost'
+
+    print("Starting server on http://{}:{} , please wait a few seconds".format(ip, port))
 
     p = subprocess.Popen(['java', '-mx{}g'.format(memoryGigsUsage), '-cp', os.path.join(stanfordDir, 'core', '*'), 'edu.stanford.nlp.pipeline.StanfordCoreNLPServer','-port', "{}".format(port), '-timeout', '15000', '-threads', '1'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     time.sleep(3)
