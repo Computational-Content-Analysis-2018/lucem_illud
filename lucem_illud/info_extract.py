@@ -17,7 +17,7 @@ parserVersion = '3.7.0'
 #This is where the zip files were unzipped.Make sure to
 #unzip into directories named after the zip files
 #Don't just put all the files in `stanford-NLP`
-stanfordDir = '../stanford-NLP'
+stanfordDir = os.path.join('..', 'stanford-NLP')
 
 #Parser model, there are a few for english and a couple of other languages as well
 modelName = 'englishPCFG.ser.gz'
@@ -50,7 +50,7 @@ def setupStanfordNLP():
 
         print("Downloaded {}, extracting to {}".format(k, dlDir))
         z = zipfile.ZipFile(io.BytesIO(r.content))
-        os.makedirs(dlDir,  exist_ok = True)
+        #os.makedirs(dlDir,  exist_ok = True)
         z.extractall(stanfordDir)
         os.rename(os.path.join(stanfordDir, z.namelist()[0]), dlDir)
 
