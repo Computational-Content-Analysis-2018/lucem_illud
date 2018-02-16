@@ -85,7 +85,7 @@ def startCoreServer(port = 16432, memoryGigsUsage = 2):
 
     print("Starting server on http://{}:{} , please wait a few seconds".format(ip, port))
 
-    p = subprocess.Popen(['java', '-mx{}g'.format(memoryGigsUsage), '-cp', os.path.join(stanfordDir, 'core', '*'), 'edu.stanford.nlp.pipeline.StanfordCoreNLPServer','-port', "{}".format(port), '-timeout', '15000', '-threads', '1'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    p = subprocess.Popen(['java', '-mx{}g'.format(memoryGigsUsage), '-cp', os.path.join(stanfordDir, 'core', '*'), 'edu.stanford.nlp.pipeline.StanfordCoreNLPServer','-port', "{}".format(port), '-timeout', '15000000', '-threads', '1'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     time.sleep(3)
     try:
         done = False
