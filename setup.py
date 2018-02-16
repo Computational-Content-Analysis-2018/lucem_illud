@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import re
 import os.path
 
-versionString = '7.0.3'
+versionString = '7.0.4'
 
 if __name__ == '__main__':
     setup(name='lucem_illud',
@@ -30,6 +30,7 @@ if __name__ == '__main__':
                 'pyanno3',
                 'beautifulsoup4',
                 'graphviz',
+                'boto3',
         ],
         classifiers = [
         'Development Status :: 1 - Planning',
