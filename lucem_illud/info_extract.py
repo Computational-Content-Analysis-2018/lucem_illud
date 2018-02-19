@@ -40,15 +40,15 @@ download_urls = {
 def setupStanfordNLP():
     os.makedirs(stanfordDir,  exist_ok = True)
     print("Starting downloads, this will take 5-10 minutes")
-    for k, v in download_urls.items():
+    for i, (k, v) in enumerate(download_urls.items()):
         dlDir = os.path.join(stanfordDir, k)
         if os.path.isdir(dlDir):
             print("{} already exists, skipping download".format(dlDir))
             continue
-        print("Downloading {} from {}".format(k, v))
+        print("[{}%] Downloading {} from {}".format(i * 25, k, v))
         r = requests.get(v)
 
-        print("Downloaded {}, extracting to {}".format(k, dlDir))
+        print("[{}%] Downloaded {}, extracting to {}".format((i + 1) * 25 - 1, k, dlDir))
         z = zipfile.ZipFile(io.BytesIO(r.content))
         #os.makedirs(dlDir,  exist_ok = True)
         z.extractall(stanfordDir)
@@ -61,4 +61,4 @@ def setupStanfordNLP():
                     with open(modelPath, 'wb') as f:
                         f.write(zf.read('edu/stanford/nlp/models/lexparser/{}'.format(modelName)))
 
-    print("Done setting up the Stanford NLP collection")
+    print("[100%]Done setting up the Stanford NLP collection")

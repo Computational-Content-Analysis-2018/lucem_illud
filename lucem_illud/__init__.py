@@ -1,3 +1,7 @@
+import os
+#For Windows
+os.environ['JAVAHOME'] =  "C:/Program Files/Java/jdk1.8.0_161/bin/java.exe"
+
 import nltk
 
 #setting the path for nltk
@@ -19,6 +23,7 @@ import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
 
+
 from .data_dirs  import *
 from .downloaders import *
 from .loaders import *
@@ -26,11 +31,10 @@ from .visualizers import *
 from .proccessing import *
 from .cartoons import *
 from .metrics import *
+
 from .info_extract import *
-try:
-    from .neurel_net import *
-except NameError:
-    pass
+
+
 import requests
 import re
 import pkg_resources
