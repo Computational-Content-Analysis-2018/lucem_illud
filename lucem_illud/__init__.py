@@ -1,6 +1,7 @@
 import os
 #For Windows
-os.environ['JAVAHOME'] =  "C:/Program Files/Java/jdk1.8.0_161/bin/java.exe"
+if os.name == 'nt':
+    os.environ['JAVAHOME'] =  "C:/Program Files/Java/jdk1.8.0_161/bin/java.exe"
 
 import nltk
 

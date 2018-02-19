@@ -60,7 +60,7 @@ def openIE(target, memoryGigsUsage = 2):
         os.path.join(jarsDir, 'slf4j-api.jar'),
         os.path.join(jarsDir, 'slf4j-simple.jar'),
     ]
-    with tempfile.NamedTemporaryFile(mode = 'w', delete = False) as f:
+    with tempfile.NamedTemporaryFile(mode = 'w', delete = False, dir = '.') as f:
         #Core nlp requires a files, so we will make a temp one to pass to it
         #This file should be deleted by the OS soon after it has been used
         f.write(target)
