@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import re
 import os.path
 
-versionString = '7.0.6'
+versionString = '7.0.7'
 
 if __name__ == '__main__':
     setup(name='lucem_illud',
@@ -31,6 +31,7 @@ if __name__ == '__main__':
                 'beautifulsoup4',
                 'graphviz',
                 'boto3',
+                'networkx==2.1',
         ],
         classifiers = [
         'Development Status :: 1 - Planning',
