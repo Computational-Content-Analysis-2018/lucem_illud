@@ -32,6 +32,7 @@ from .visualizers import *
 from .proccessing import *
 from .cartoons import *
 from .metrics import *
+from .bayesian import *
 
 from .info_extract import *
 
