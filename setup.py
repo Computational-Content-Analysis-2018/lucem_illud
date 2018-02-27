@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import re
 import os.path
 
-versionString = '8.0.0'
+versionString = '8.0.1'
 
 if __name__ == '__main__':
     setup(name='lucem_illud',
@@ -32,6 +32,11 @@ if __name__ == '__main__':
                 'graphviz',
                 'boto3',
                 'networkx==2.1',
+                'pydub',
+                'speechrecognition',
+                'pysoundfile',
+                'scikit-image==0.13.1',
+                'Pillow==5.0.0',
         ],
         classifiers = [
         'Development Status :: 1 - Planning',
